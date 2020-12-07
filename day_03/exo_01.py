@@ -9,19 +9,15 @@ def count_trees(map: list, base_counter: int) -> int:
         counter += base_counter
         round_base = math.floor(counter / line_length)
         key = counter - (round_base * line_length)
-        total_trees += line[key]
+        total_trees += 1 if line[key] == "#" else 0
     return total_trees
 
 
-my_file = open("input.txt", "r")
-lines = my_file.readlines()
+if __name__ == '__main__':
+    with open("input.txt", "r") as my_file:
+        map = my_file.read().splitlines()
 
-map = []
-for line in lines:
-    formatted_line = [0 if c == "." else 1 for c in line.rstrip("\n")]
-    map.append(formatted_line)
+    map.pop(0)
+    total_trees = count_trees(map, 3)
 
-map.pop(0)
-total_trees = count_trees(map, 3)
-
-print(total_trees)
+    print(total_trees)
