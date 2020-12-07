@@ -13,6 +13,15 @@ def count_trees(map: list, base_counter: int) -> int:
     return total_trees
 
 
+def prepare_map(map: list, lines_count: int) -> list:
+    copy_map = map.copy()
+    for idx in reversed(range(len(map))):
+        if idx % lines_count == 0:
+            copy_map.pop(idx)
+
+    return copy_map
+
+
 my_file = open("input.txt", "r")
 lines = my_file.readlines()
 
@@ -22,6 +31,12 @@ for line in lines:
     map.append(formatted_line)
 
 map.pop(0)
-total_trees = count_trees(map, 3)
+multi = (
+    count_trees(map, 1)
+    * count_trees(map, 3)
+    * count_trees(map, 5)
+    * count_trees(map, 7)
+)
+multi = multi * count_trees(prepare_map(map, 2), 1)
 
-print(total_trees)
+print(multi)
